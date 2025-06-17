@@ -1,0 +1,23 @@
+{
+  "name": "als",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "lint:check": "biome check --no-errors-on-unmatched",
+    "lint:unsafe": "biome check --write --unsafe .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check-all": "biome check --write . && npm run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
+}

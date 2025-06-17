@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  padding: 20px;
+  background-color: #222;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+canvas {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
