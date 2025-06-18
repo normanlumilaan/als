@@ -20,24 +20,6 @@ export class SpectrumRenderer
   private imageData: ImageData | null = null;
   private buffer: Uint32Array | null = null;
   private colorPalette: number[] = [];
-  private colorOrder = [
-    SPECTRUM_COLORS.BLACK,
-    SPECTRUM_COLORS.BLUE,
-    SPECTRUM_COLORS.RED,
-    SPECTRUM_COLORS.MAGENTA,
-    SPECTRUM_COLORS.GREEN,
-    SPECTRUM_COLORS.CYAN,
-    SPECTRUM_COLORS.YELLOW,
-    SPECTRUM_COLORS.WHITE,
-    SPECTRUM_COLORS.BRIGHT_BLACK,
-    SPECTRUM_COLORS.BRIGHT_BLUE,
-    SPECTRUM_COLORS.BRIGHT_RED,
-    SPECTRUM_COLORS.BRIGHT_MAGENTA,
-    SPECTRUM_COLORS.BRIGHT_GREEN,
-    SPECTRUM_COLORS.BRIGHT_CYAN,
-    SPECTRUM_COLORS.BRIGHT_YELLOW,
-    SPECTRUM_COLORS.BRIGHT_WHITE,
-  ] as const;
 
   constructor() {
     super();
@@ -45,18 +27,70 @@ export class SpectrumRenderer
   }
 
   private getColorByIndex(index: number): string {
-    return this.colorOrder[index] || SPECTRUM_COLORS.BRIGHT_WHITE;
+    switch (index) {
+      case 0:
+        return SPECTRUM_COLORS.BLACK;
+      case 1:
+        return SPECTRUM_COLORS.BLUE;
+      case 2:
+        return SPECTRUM_COLORS.RED;
+      case 3:
+        return SPECTRUM_COLORS.MAGENTA;
+      case 4:
+        return SPECTRUM_COLORS.GREEN;
+      case 5:
+        return SPECTRUM_COLORS.CYAN;
+      case 6:
+        return SPECTRUM_COLORS.YELLOW;
+      case 7:
+        return SPECTRUM_COLORS.WHITE;
+      case 8:
+        return SPECTRUM_COLORS.BRIGHT_BLACK;
+      case 9:
+        return SPECTRUM_COLORS.BRIGHT_BLUE;
+      case 10:
+        return SPECTRUM_COLORS.BRIGHT_RED;
+      case 11:
+        return SPECTRUM_COLORS.BRIGHT_MAGENTA;
+      case 12:
+        return SPECTRUM_COLORS.BRIGHT_GREEN;
+      case 13:
+        return SPECTRUM_COLORS.BRIGHT_CYAN;
+      case 14:
+        return SPECTRUM_COLORS.BRIGHT_YELLOW;
+      case 15:
+        return SPECTRUM_COLORS.BRIGHT_WHITE;
+      default:
+        return SPECTRUM_COLORS.BRIGHT_WHITE;
+    }
   }
 
   private initializePalette(): void {
-    this.colorPalette = [];
-    for (let i = 0; i < 16; i++) {
-      const color = this.getColorByIndex(i);
+    const colors = [
+      SPECTRUM_COLORS.BLACK,
+      SPECTRUM_COLORS.BLUE,
+      SPECTRUM_COLORS.RED,
+      SPECTRUM_COLORS.MAGENTA,
+      SPECTRUM_COLORS.GREEN,
+      SPECTRUM_COLORS.CYAN,
+      SPECTRUM_COLORS.YELLOW,
+      SPECTRUM_COLORS.WHITE,
+      SPECTRUM_COLORS.BRIGHT_BLACK,
+      SPECTRUM_COLORS.BRIGHT_BLUE,
+      SPECTRUM_COLORS.BRIGHT_RED,
+      SPECTRUM_COLORS.BRIGHT_MAGENTA,
+      SPECTRUM_COLORS.BRIGHT_GREEN,
+      SPECTRUM_COLORS.BRIGHT_CYAN,
+      SPECTRUM_COLORS.BRIGHT_YELLOW,
+      SPECTRUM_COLORS.BRIGHT_WHITE,
+    ];
+
+    this.colorPalette = colors.map((color) => {
       const r = parseInt(color.slice(1, 3), 16);
       const g = parseInt(color.slice(3, 5), 16);
       const b = parseInt(color.slice(5, 7), 16);
-      this.colorPalette.push((255 << 24) | (b << 16) | (g << 8) | r);
-    }
+      return (255 << 24) | (b << 16) | (g << 8) | r;
+    });
   }
 
   getLogicalWidth(): number {
