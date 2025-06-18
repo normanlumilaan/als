@@ -4,7 +4,6 @@ export type {
   DrawInstruction,
   SpectrumRendererInterface,
 } from "./interfaces/SpectrumRenderer";
-export type { SpectrumColor } from "./types/SpectrumTypes";
 export {
   SPECTRUM_COLORS,
   SPECTRUM_WIDTH,

@@ -1,21 +1,21 @@
-export const SPECTRUM_COLORS = [
-  "#000000",
-  "#0000CD",
-  "#CD0000",
-  "#CD00CD",
-  "#00CD00",
-  "#00CDCD",
-  "#CDCD00",
-  "#CDCDCD",
-  "#000000",
-  "#0000FF",
-  "#FF0000",
-  "#FF00FF",
-  "#00FF00",
-  "#00FFFF",
-  "#FFFF00",
-  "#FFFFFF",
-] as const;
+export const SPECTRUM_COLORS = {
+  BLACK: "#000000",
+  BLUE: "#0100CE",
+  RED: "#CF0100",
+  MAGENTA: "#CF01CE",
+  GREEN: "#00CF15",
+  CYAN: "#01CFCF",
+  YELLOW: "#CFCF15",
+  WHITE: "#CFCFCF",
+  BRIGHT_BLACK: "#000000",
+  BRIGHT_BLUE: "#0200FD",
+  BRIGHT_RED: "#FF0201",
+  BRIGHT_MAGENTA: "#FF02FD",
+  BRIGHT_GREEN: "#00FF1C",
+  BRIGHT_CYAN: "#02FFFF",
+  BRIGHT_YELLOW: "#FFFF1D",
+  BRIGHT_WHITE: "#FFFFFF",
+} as const;
 
 export const SPECTRUM_WIDTH = 256;
 export const SPECTRUM_HEIGHT = 192;
@@ -24,21 +24,3 @@ export const SPECTRUM_BORDER_HEIGHT = 24;
 export const SPECTRUM_TOTAL_WIDTH = SPECTRUM_WIDTH + SPECTRUM_BORDER_WIDTH * 2;
 export const SPECTRUM_TOTAL_HEIGHT =
   SPECTRUM_HEIGHT + SPECTRUM_BORDER_HEIGHT * 2;
-
-export type SpectrumColor =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15;

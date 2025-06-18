@@ -20,19 +20,43 @@ export class SpectrumRenderer
   private imageData: ImageData | null = null;
   private buffer: Uint32Array | null = null;
   private colorPalette: number[] = [];
+  private colorOrder = [
+    SPECTRUM_COLORS.BLACK,
+    SPECTRUM_COLORS.BLUE,
+    SPECTRUM_COLORS.RED,
+    SPECTRUM_COLORS.MAGENTA,
+    SPECTRUM_COLORS.GREEN,
+    SPECTRUM_COLORS.CYAN,
+    SPECTRUM_COLORS.YELLOW,
+    SPECTRUM_COLORS.WHITE,
+    SPECTRUM_COLORS.BRIGHT_BLACK,
+    SPECTRUM_COLORS.BRIGHT_BLUE,
+    SPECTRUM_COLORS.BRIGHT_RED,
+    SPECTRUM_COLORS.BRIGHT_MAGENTA,
+    SPECTRUM_COLORS.BRIGHT_GREEN,
+    SPECTRUM_COLORS.BRIGHT_CYAN,
+    SPECTRUM_COLORS.BRIGHT_YELLOW,
+    SPECTRUM_COLORS.BRIGHT_WHITE,
+  ] as const;
 
   constructor() {
     super();
     this.initializePalette();
   }
 
+  private getColorByIndex(index: number): string {
+    return this.colorOrder[index] || SPECTRUM_COLORS.BRIGHT_WHITE;
+  }
+
   private initializePalette(): void {
-    this.colorPalette = SPECTRUM_COLORS.map((color) => {
+    this.colorPalette = [];
+    for (let i = 0; i < 16; i++) {
+      const color = this.getColorByIndex(i);
       const r = parseInt(color.slice(1, 3), 16);
       const g = parseInt(color.slice(3, 5), 16);
       const b = parseInt(color.slice(5, 7), 16);
-      return (255 << 24) | (b << 16) | (g << 8) | r;
-    });
+      this.colorPalette.push((255 << 24) | (b << 16) | (g << 8) | r);
+    }
   }
 
   getLogicalWidth(): number {
@@ -184,7 +208,7 @@ export class SpectrumRenderer
 
     this.ctx.save();
     this.ctx.font = "8px monospace";
-    this.ctx.fillStyle = SPECTRUM_COLORS[instruction.color || 15];
+    this.ctx.fillStyle = this.getColorByIndex(instruction.color || 15);
     this.ctx.textBaseline = "top";
     this.ctx.fillText(instruction.text, x * this.scale, y * this.scale);
     this.ctx.restore();
