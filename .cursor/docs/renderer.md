@@ -8,4 +8,4 @@ create html 5 canvas renderer class that
 - scale graphic objects from their original defined dimensions to current canvas sixe on screen while being crisp (taking account current canvas size on screen and pixel density)
 - respect project's exising file structure. organize files into respecive folders or files if exists (interfaces, abstracts, constants, etc)
 - do not add comments unless it's tricky to understand
-  do not make summary about what you created
+- do not make summary about what you created

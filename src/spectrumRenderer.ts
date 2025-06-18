@@ -20,6 +20,7 @@ export class SpectrumRenderer
   private imageData: ImageData | null = null;
   private buffer: Uint32Array | null = null;
   private colorPalette: number[] = [];
+  private textInstructions: DrawInstruction[] = [];
 
   constructor() {
     super();
@@ -133,6 +134,9 @@ export class SpectrumRenderer
         this.buffer[rowStart + x] = screenColor;
       }
     }
+
+    // Clear text instructions when clearing the screen
+    this.textInstructions = [];
   }
 
   draw(instruction: DrawInstruction): void {
@@ -235,16 +239,32 @@ export class SpectrumRenderer
   }
 
   private drawText(instruction: DrawInstruction): void {
-    if (!this.ctx || !instruction.text) return;
+    // Store text instructions to be rendered after the buffer is drawn
+    if (!instruction.text) return;
 
-    const x = SPECTRUM_BORDER_WIDTH + instruction.x;
-    const y = SPECTRUM_BORDER_HEIGHT + instruction.y;
+    if (!this.textInstructions) {
+      this.textInstructions = [];
+    }
+    this.textInstructions.push(instruction);
+  }
+
+  private renderTextInstructions(scaleX: number, scaleY: number): void {
+    if (!this.ctx || !this.textInstructions.length) return;
 
     this.ctx.save();
-    this.ctx.font = "8px monospace";
-    this.ctx.fillStyle = this.getColorByIndex(instruction.color || 15);
+    this.ctx.font = `${14 * scaleY}px monospace`;
     this.ctx.textBaseline = "top";
-    this.ctx.fillText(instruction.text, x * this.scale, y * this.scale);
+
+    for (const instruction of this.textInstructions) {
+      if (!instruction.text) continue;
+
+      const x = (SPECTRUM_BORDER_WIDTH + instruction.x) * scaleX;
+      const y = (SPECTRUM_BORDER_HEIGHT + instruction.y) * scaleY;
+
+      this.ctx.fillStyle = this.getColorByIndex(instruction.color || 15);
+      this.ctx.fillText(instruction.text, x, y);
+    }
+
     this.ctx.restore();
   }
 
@@ -262,5 +282,8 @@ export class SpectrumRenderer
     this.ctx.scale(scaleX, scaleY);
     this.ctx.drawImage(this.canvas, 0, 0);
     this.ctx.restore();
+
+    // Draw text instructions after the buffer is rendered
+    this.renderTextInstructions(scaleX, scaleY);
   }
 }
